@@ -1,5 +1,10 @@
+  Feature: List of geradorDeResiduo.
+    As a coletorDeResiduo.
+    I want to list and sort all geradorDeResiduo.
+    so that I know all geradorDeResiduo and which geradorDeResiduo are a priority.
 
-  #if($listing)
+
+  #if($list)
     Scenario: list existing geradorDeResiduo.
      Given the system has a geradorDeResiduo named "Restaurante Universitario" in it.
      When I create a list with all geradorDeResiduo.
