@@ -36,6 +36,7 @@ Then(~'^a list of results containing "([^"]*)" before "([^"]*)" appears$') { Str
 
 
 Given(~'I am on the "([^"]*)" page$') { String title ->
+    to ListaGeradorDeResiduoPage
     at ListaGeradorDeResiduoPage
 }
 
