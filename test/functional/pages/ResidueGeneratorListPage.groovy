@@ -12,4 +12,9 @@ class ResidueGeneratorListPage extends Page {
         title ==~ gp
     }
 
+
+    def sortByVolume(){
+        $("input", name: "volume").click()
+    }
+
 }

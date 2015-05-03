@@ -19,15 +19,15 @@
      And "Restaurante Universitario" appears before "Cantina Area 2".
 
     Scenario: display list.
-     Given I am on the "Indice" page.
-     When I click on the "Geradores de Residuos" button.
-     Then I am on the "Gerador de Residuos" page.
+     Given I am on the Index page.
+     When I click on the Residue Generators List button.
+     Then I am on the Residuo Generator List page.
      And a list of geradorDeResiduo is displayed.
 
     Scenario: sort by volume.
-     Given I am at the "Geradores de Residuos" page.
-     When I click on the "Organizar por volume de residuo" button.
-     Then I am on the "Geradores de Residuos" page.
+     Given I am at the Residue Generators List page.
+     When I click on the Sort by Volume button.
+     Then I am on the Residue Generators List page.
 
     Scenario: no geradorDeResiduo on system.
      Given there are no geradorDeResiduo in the system.

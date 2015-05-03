@@ -35,18 +35,23 @@ Then(~'^a list of results containing "([^"]*)" before "([^"]*)" appears$') { Str
 }
 
 
-Given(~'I am on the "([^"]*)" page$') { String title ->
+Given(~'I am on the Residue Generators page$') {
     to ListaGeradorDeResiduoPage
     at ListaGeradorDeResiduoPage
 }
 
-Then(~'I am now on the "([^"]*)" page$') { String title ->
+Given(~'I am on the Index page$'){
+
+
+}
+
+Then(~'I am now on the Residue Generators page$') {
     at ListaGeradorDeResiduoPage
 }
 
-When(~'I click on the "([^"]*)" button$'){String title ->
+When(~'I click on the Sort by Volume button$'){
     at ListaGeradorDeResiduoPage
-    page.selectButton.title
+    ListaGeradorDeResiduoPage.sortByVolume()
 }
 
 Then(~'the list is sorted by volume$'){->
