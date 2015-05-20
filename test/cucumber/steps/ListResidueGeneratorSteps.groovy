@@ -1,4 +1,3 @@
-package steps
 
 import residueGenerator.ResidueGenerator
 import residueGeneratorTestDataAndOperations
@@ -42,7 +41,14 @@ Given(~'I am on the Residue Generators page$') {
 
 Given(~'I am on the Index page$'){
 
+Then(~'^I am at the Residue Generator List page$'){->
+    to ResidueGeneratorListPage
+    at ResidueGeneratorListPage
+}
 
+Given(~'^I am at the Residue Generators List page$'){->
+    to ResidueGeneratorListPage
+    at ResidueGeneratorListPage
 }
 
 Then(~'I am now on the Residue Generators page$') {
