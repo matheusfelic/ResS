@@ -27,6 +27,7 @@ class GeneratorTestDataAndOperations{
              addressGenerator: "Donut Street number 5",
              averageMonthlyMeals: 0,
              averageDailyMeals: 0]
+
     ]
 
     static public def getGenerator(){
@@ -119,27 +120,31 @@ class GeneratorTestDataAndOperations{
         return novoGenerator;
     }
 
-    static public void createAltGenerator(String address){
+
+    //LIST FEATURES
+    static public void createGeneratorWithDailyMeal(String address, int dailymeal){
         def cont = new ResidueGeneratorController()
-        def novoGenerator = getAltGenerator(address)
+        def novoGenerator = findGeneratorByAddress("Bubble Street number 7")
         cont.params << novoGenerator
-        cont.create()
-        cont.save()
-        cont.response.reset()
-
-    }
-
-    static public void createIncompleteGenerator(String address){
-        def cont = new ResidueGeneratorController()
-        cont.params << [nameGenerator: "",
-                        type: "Restaurante",
-                        cnpj: null,
-                        addressGenerator: address,
-                        averageMonthlyMeals: null,
-                        averageDailyMeals: 0];
+        cont.params << [addressGenerator: address] << [averageDailyMeals: dailymeal]
         cont.create()
         cont.save()
         cont.response.reset()
     }
+
+
+    static public boolean containResidueGenerator(String address,ResGen){
+        def testresidue = ResidueGenerator.findByAddressGenerator(address)
+        return ResGen.contains(testresidue)
+    }
+
+    static public boolean isSorted(Residuegenerators) {
+        //def isSorted = (Residuegenerators.size() < 2 || (1..<Residuegenerators.size()).every { (Residuegenerators[it - 1].averageDailyMeals).compareTo(Residuegenerators[it].averageDailyMeals) > 0})
+        def isSorted = ResidueGenerator.findAll().sort{it.averageDailyMeals}
+        isSorted = isSorted.reverse()
+        return ((isSorted[0].addressGenerator).equals(Residuegenerators[0].addressGenerator) && (isSorted[1].addressGenerator).equals(Residuegenerators[1].addressGenerator))
+    }
+    ///////
+
 
 }

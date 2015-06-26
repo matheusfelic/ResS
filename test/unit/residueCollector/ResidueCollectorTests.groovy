@@ -1,15 +1,13 @@
-package ress
+package residueCollector
 
-
-
+import ResidueCollector.ResidueCollector
 import grails.test.mixin.*
-import org.junit.*
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
  */
-@TestFor(Teste)
-class TesteTests {
+@TestFor(ResidueCollector)
+class ResidueCollectorTests {
 
     void testSomething() {
         fail "Implement me"
