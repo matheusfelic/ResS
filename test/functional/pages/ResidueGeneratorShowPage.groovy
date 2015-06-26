@@ -23,4 +23,11 @@ class ResidueGeneratorShowPage extends Page{
             return true
         }
     }
+
+
+    //LIST FEATURE
+    def selectListResidueGenerators(){
+        $("input",name: "listResidueGenerators").click()
+    }
+    //
 }

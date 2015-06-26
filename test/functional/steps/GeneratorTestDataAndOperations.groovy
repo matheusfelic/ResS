@@ -142,4 +142,30 @@ class GeneratorTestDataAndOperations{
         cont.response.reset()
     }
 
+    //LIST FEATURES
+    static public void createGeneratorWithDailyMeal(String address, int dailymeal){
+        def cont = new ResidueGeneratorController()
+        def novoGenerator = findGeneratorByAddress("Bubble Street number 7")
+        cont.params << novoGenerator
+        cont.params << [addressGenerator: address] << [averageDailyMeals: dailymeal]
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+
+
+    static public boolean containResidueGenerator(String address,ResGen){
+        def testresidue = ResidueGenerator.findByAddressGenerator(address)
+        return ResGen.contains(testresidue)
+    }
+
+    static public boolean isSorted(Residuegenerators) {
+        //def isSorted = (Residuegenerators.size() < 2 || (1..<Residuegenerators.size()).every { (Residuegenerators[it - 1].averageDailyMeals).compareTo(Residuegenerators[it].averageDailyMeals) > 0})
+        def isSorted = ResidueGenerator.findAll().sort{it.averageDailyMeals}
+        isSorted = isSorted.reverse()
+        return ((isSorted[0].addressGenerator).equals(Residuegenerators[0].addressGenerator) && (isSorted[1].addressGenerator).equals(Residuegenerators[1].addressGenerator))
+    }
+    ///////
+
+
 }
