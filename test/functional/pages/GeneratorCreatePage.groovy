@@ -1,31 +1,47 @@
 package pages
 import geb.Page
 
-
 class GeneratorCreatePage extends Page{
 
-    static url = "residuegenerator/create"
+    def titulo = "Create Residue Generator"
+    static url = "/ResS/residueGenerator/create"
 
     static at = {
-        GetPageTitle gp = new GetPageTitle()
-        def gerador = gp.getMessage("default.generator.label")
-        def titulo = gp.getMessage("default.create.label") + " " + gerador
-        title ==~ titulo
+
+         title ==~ titulo
     }
 
-    def fillGeneratorDetails(){
+    def fillGeneratorDetails(LinkedHashMap gerador){
 
-        $("form").nameGenerator = "RU"
-        $("form").type = "Restaurante"
-        $("form").cnpj = "testecnpj1"
-        $("form").addressGenerator = "Bubble Street number 7"
-        $("form").averageMonthlyMeals = 0
-        $("form").averageDailyMeals = 0
+        $("form").nameGenerator = gerador.nameGenerator
+        $("form").type = gerador.type
+        $("form").cnpj = gerador.cnpj
+        $("form").addressGenerator = gerador.addressGenerator
+        $("form").averageMonthlyMeals = gerador.averageMonthlyMeals
+        $("form").averageDailyMeals = gerador.averageDailyMeals
+
+    }
+
+    def fillGeneratorDetailsIncomplete(LinkedHashMap gerador){
+
+        $("form").nameGenerator = gerador.nameGenerator
+        $("form").type = gerador.type
+        $("form").cnpj = ""
+        $("form").averageMonthlyMeals = gerador.averageMonthlyMeals
+        $("form").averageDailyMeals = gerador.averageDailyMeals
 
     }
 
     def selectCreateGenerator(){
         $("input", name: "create").click()
+    }
+
+    def boolean hasErrors(){
+        if($(".errors") == null){
+            return false
+        }else{
+            return true
+        }
     }
 
 }

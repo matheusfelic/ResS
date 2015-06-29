@@ -1,5 +1,5 @@
-\<%@ page import="residueGenerator.ResidueGenerator" %>
-<!doctype html>
+<%@ page import="residueGenerator.ResidueGenerator" %>
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta name="layout" content="main">

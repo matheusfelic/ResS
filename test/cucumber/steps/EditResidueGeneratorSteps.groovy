@@ -1,27 +1,26 @@
-import geb.Page
-import pages.ResidueGeneratorEditPage
-import residueGenerator.ResidueGenerator
-import residueGenerator.ResidueGeneratorController
-import pages.GetPageTitle
+package steps
 
-import static cucumber.runtime.groovy.EN.*
+import pages.ResidueGeneratorEditPage
+import pages.ResidueGeneratorShowPage
+import residueGenerator.ResidueGenerator
+import static cucumber.api.groovy.EN.*
+
+// ---------------------------------------------EDIT SUCCESS---------------------------------------------
 
 Given(~'^the system has a residue generator with the address "([^"]*)"$') { String address ->
-    residueGen = ResidueGenerator.findByAddressGenerator(address)
-    assert residueGen != null
+    GeneratorTestDataAndOperations.createGenerator(address)
+    generator = ResidueGenerator.findByAddressGenerator(address)
+    assert generator != null
 }
 
 When (~'^I change it to "([^"]*)"$') {  String newAddress ->
-    residueGen.setAddressGenerator(newAddress)
-    updatedAddress = newAddress
-    ResidueGeneratorController.save(residueGen)
+    endereco = newAddress
+    GeneratorTestDataAndOperations.editGenerator(endereco, generator)
 }
 
 Then(~'^the system should store the residue generator with the new address in the data base$') { ->
-    updatedResidueGen = ResidueGenerator.findByAddressGenerator(updatedAddress)
-    assert updatedResidueGen != null
+    assert ResidueGenerator.findByAddressGenerator(endereco) != null
 }
-
 
 Given(~'^I am at the residue generator edit page'){ ->
     to ResidueGeneratorEditPage
@@ -29,19 +28,53 @@ Given(~'^I am at the residue generator edit page'){ ->
 }
 
 When(~'^I fill the address field with "([^"]*)"'){String address ->
-    ResidueGeneratorEditPage.edit(address)
+    page.fillAddressField(address)
 }
 
-And(~'^fill all the required fields correctly'){
-    def isValid = ResidueGeneratorEditPage.checkFields()
-    assert isValid == false
+And(~'^fill all the required fields correctly'){ ->
+    page.fillOtherFields()
 }
 
-And(~'^submit my changes'){
-    ResidueGeneratorEditPage.submit()
+And(~'^submit my changes'){ ->
+    page.submitChanges()
 }
 
-Then(~'^I should see a message indicating that the changes are properly stored'){
-    ResidueGeneratorEditPage.showSuccessMessage()
+Then(~'^I should see a message indicating that the changes are properly stored'){ ->
+    to ResidueGeneratorShowPage
+    at ResidueGeneratorShowPage
+
+    def hasMessage = page.hasMessage()
+
+    assert hasMessage != null
 }
 
+//---------------------------------------------LEAVING BLANK FIELDS------------------------------------------------------------
+
+
+When(~'^I do not fill the address field$'){ ->
+    nullAddress = null
+}
+
+And(~'^confirm my changes$'){ ->
+    GeneratorTestDataAndOperations.editGenerator(nullAddress,generator)
+}
+
+Then(~'^the system should not store the changes'){ ->
+    assert ResidueGenerator.findByAddressGenerator(endereco) != null
+}
+
+//------------------------------------------------DUPLICATED RESIDUE GENERATORS-------------------------------------------------
+
+
+When(~'^I change it address to "([^"]*)"$'){ String newAddress  ->
+    endereco = newAddress
+    GeneratorTestDataAndOperations.editGenerator(endereco, generator)
+}
+
+//------------------------------------------------EDIT FAIL WEB PAGE------------------------------------------------------------
+
+Then(~'^I should see a message indicating that an error occurred$'){ ->
+    at ResidueGeneratorEditPage
+    def errorBoolean = page.hasInvalidMessage()
+    assert errorBoolean != false
+}

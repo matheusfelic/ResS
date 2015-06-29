@@ -10,6 +10,11 @@ class ResidueGeneratorController {
         redirect(action: "list", params: params)
     }
 
+    def search(Integer max){
+        params.max = Math.min(max ?: 10, 100)
+        [residueGeneratorInstanceList: ResidueGenerator.list(params), residueGeneratorInstanceTotal: ResidueGenerator.count()]
+    }
+
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         [residueGeneratorInstanceList: ResidueGenerator.list(params), residueGeneratorInstanceTotal: ResidueGenerator.count()]
@@ -63,8 +68,8 @@ class ResidueGeneratorController {
         if (version != null) {
             if (residueGeneratorInstance.version > version) {
                 residueGeneratorInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                        [message(code: 'residueGenerator.label', default: 'ResidueGenerator')] as Object[],
-                        "Another user has updated this ResidueGenerator while you were editing")
+                          [message(code: 'residueGenerator.label', default: 'ResidueGenerator')] as Object[],
+                          "Another user has updated this ResidueGenerator while you were editing")
                 render(view: "edit", model: [residueGeneratorInstance: residueGeneratorInstance])
                 return
             }

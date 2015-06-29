@@ -1,36 +1,46 @@
 package pages
 
 import geb.Page
-import residueGenerator.ResidueGenerator
+import steps.GeneratorTestDataAndOperations
 
-class ResidueGeneratorEditPage extends  Page{
+class ResidueGeneratorEditPage extends Page{
 
-    static url = "residuegenerator/Edit"
+    def titulo = "Editar ResidueGenerator"
+    static url = "/ResS/residueGenerator/edit/1"
 
     static at = {
-        GetPageTitle gp = new GetPageTitle()
-        def gerador = gp.getMessage("default.generator.label")
-        def titulo = gp.getMessage("default.create.label") + " " + gerador
         title ==~ titulo
     }
 
-    static content = {
-
+    def fillAddressField(String address){
+        $("form").addressGenerator = address
     }
 
-    def  void edit(String address){
-        $('form').address = address
+    def fillOtherFields() {
+        GeneratorTestDataAndOperations GTDO = new GeneratorTestDataAndOperations();
+        LinkedHashMap gerador = GTDO.getGenerator();
+        $("form").nameGenerator = gerador.nameGenerator
+        $("form").type = gerador.type
+        $("form").cnpj = gerador.cnpj
+        $("form").averageMonthlyMeals = gerador.averageMonthlyMeals
+        $("form").averageDailyMeals = gerador.averageDailyMeals
     }
 
-    def submit() {
-        $("form").find("input").click()
+    def submitChanges(){
+        $("input", name: "edit").click()
     }
 
-    def boolean checkFields(){
+    def boolean hasInvalidMessage(){
 
+        def invalidField = $('input:invalid')
+
+        if(invalidField != null){
+            return true
+        } else {
+            return false
+        }
     }
 
-    def showSuccessMessage(){
 
-    }
+
 }

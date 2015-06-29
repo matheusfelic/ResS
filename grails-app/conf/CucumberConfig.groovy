@@ -1,5 +1,7 @@
-cucumber{
-    features = ["test/cucumber"]
-    glue = features
-    tags = ["~@ignore"]
+cucumber {
+
+  features = ["test/cucumber"]
+  glue = features
+  tags = ["~@ignore"]
+
 }

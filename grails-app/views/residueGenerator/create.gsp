@@ -1,10 +1,10 @@
 <%@ page import="residueGenerator.ResidueGenerator" %>
-<!doctype html>
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'residueGenerator.label', default: 'ResidueGenerator')}" />
-		<title><g:message code="default.create.label" args="[entityName]" /></title>
+		<title>Create Residue Generator</title>
 	</head>
 	<body>
 		<a href="#create-residueGenerator" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -15,7 +15,7 @@
 			</ul>
 		</div>
 		<div id="create-residueGenerator" class="content scaffold-create" role="main">
-			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
+			<h1>Create Residue Generator</h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>

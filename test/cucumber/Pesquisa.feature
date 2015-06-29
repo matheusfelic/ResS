@@ -1,30 +1,27 @@
+
 Feature: Pesquisa de pontos de coleta
   As a membro da empresa coletora
   I want to pesquisar pontos de coleta aos quais eu esteja associado
   so that eu possa obter suas informações cadastrais
 
-Scenario: Pesquisa por nome do ponto
-  Given Existe no sistema um ponto chamado "RU"
-  When pesquiso o ponto pelo seu nome cadastrado
-  Then consigo obter o perfil do ponto requerido
+  Scenario: Pesquisa por nome do ponto
+    Given Existe no sistema um ponto chamado "RU"
+    When procuro por "RU"
+    Then consigo obter o perfil do "RU"
 
-Scenario: Pesquisa por nome do administrador do ponto
-  Given Existe um administrador de ponto de coleta chamado "Carla Ionara"
-  When pesquiso o ponto pelo nome "Carla Ionara"
-  Then consigo obter o perfil do ponto requerido
+  Scenario: Pesquisa por nome cnpj do ponto
+    Given Existe um cnpj de ponto de coleta com o numero "testecnpj1"
+    When pesquiso o ponto pelo cnpj "testecnpj1"
+    Then consigo obter o perfil do ponto com cnpj "testecnpj1"
 
-Scenario: Pesquisa de pontos encontrados
-  Given Eu seleciono o ícone de pesquisa na página principal
-  And pequiso por um nome
-  When uma foto uma perfil
-  And o nome do ponto de coleta aparecerem na tela
-  And seleciono o link da foto
-  Then acesso o perfil completo do ponto de coleta
+  Scenario: Pesquisa de pontos não encontrados
+    Given Nao existe no sistema um ponto chamado "Area 2"
+    When pesquiso pelo ponto "Area 2"
+    Then Nao eh possivel se obter o ponto "Area 2"
 
-Scenario: Pesquisa de pontos não encontrados
-  Given Eu estou logado na página principal
-  When seleciono o ícone de pesquisa
-  And pesquiso por "Galeto da Esquina"
-  Then uma mensagem de erro aparecerá informando que o ponto não existe
+  Scenario: Pesquisa de pontos encontrados
+    Given Eu estou logado na pagina de pesquisa
+    When pesquiso por "RU"
+    Then A lista de pontos com o nome procurado aparecera
 
 
